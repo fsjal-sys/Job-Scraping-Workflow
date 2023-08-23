@@ -26,3 +26,9 @@ def rest():
 def get_credentials():
     load_dotenv()
     return getenv("EMAIL"), getenv("PASSWORD")
+
+def get_selectors():
+    with open("./selectors.json") as selectors_file:
+        selectors = selectors_file.read()
+    selectors_file.close()
+    return selectors
