@@ -1,15 +1,18 @@
 from utils import *
-from time import sleep
-from dotenv import load_dotenv
 
-driver = driver_setup()
-
-driver.get("https://www.google.com")
+def setup(driver):
+    driver.get("https:ca.indeed.com")
+    rest()
 
 def login():
     pass
 
 def main():
-    pass
+    driver = driver_setup()
+    #driver.get("https://www.google.com")
+    email, password = get_credentials()
+    print(email)
+    print(password)
+    setup(driver)
 
 main()
