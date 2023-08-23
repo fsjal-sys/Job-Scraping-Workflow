@@ -18,4 +18,5 @@ def try_getting(element_selector, driver):
             pass
     return element
 
-def rest(): sleep(10000)
+def rest(): 
+    while (True): sleep(1)
