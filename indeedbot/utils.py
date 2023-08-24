@@ -1,15 +1,14 @@
-from undetected_chromedriver import Chrome, ChromeOptions
+import undetected_chromedriver
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
 from time import sleep
 from dotenv import load_dotenv
 from os import getenv
 
-def driver_setup():
-    options = ChromeOptions()
-    return Chrome(options=options)
+def driver_setup(): return undetected_chromedriver.Chrome(driver_executable_path="./chromedriver-linux64/chromedriver")
 
 def try_getting(element_selector, driver):
+    print(f"Trying to find element: {element_selector}")
     getting = True
     element = None
     while getting:
@@ -21,14 +20,9 @@ def try_getting(element_selector, driver):
     return element
 
 def rest(): 
+    print("Resting...")
     while (True): sleep(1)
 
 def get_credentials():
     load_dotenv()
     return getenv("EMAIL"), getenv("PASSWORD")
-
-def get_selectors():
-    with open("./selectors.json") as selectors_file:
-        selectors = selectors_file.read()
-    selectors_file.close()
-    return selectors
