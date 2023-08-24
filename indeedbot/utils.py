@@ -1,4 +1,4 @@
-import undetected_chromedriver
+import undetected_chromedriver, time
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
 from time import sleep
@@ -11,7 +11,7 @@ def try_getting(element_selector, driver):
     print(f"Trying to find element: {element_selector}")
     getting = True
     element = None
-    while getting:
+    while getting :
         try:
             element = driver.find_element(By.CSS_SELECTOR, element_selector)
             getting = False
@@ -26,3 +26,7 @@ def rest():
 def get_credentials():
     load_dotenv()
     return getenv("EMAIL"), getenv("PASSWORD")
+
+def get_search_terms():
+    load_dotenv()
+    return getenv("SEARCH_TERM"), getenv("LOCATION")
