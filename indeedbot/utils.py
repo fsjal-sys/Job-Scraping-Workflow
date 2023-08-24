@@ -19,6 +19,19 @@ def try_getting(element_selector, driver):
             pass
     return element
 
+def try_getting_timed(element_selector, driver, timer):
+    print(f"Trying to find element: {element_selector}")
+    element = None
+    start_time = time.time()
+
+    while (time.time() - start_time) < timer:
+        try:
+            element = driver.find_element(By.CSS_SELECTOR, element_selector)
+            getting = False
+        except NoSuchElementException:
+            pass
+    return element
+
 def rest(): 
     print("Resting...")
     while (True): sleep(1)

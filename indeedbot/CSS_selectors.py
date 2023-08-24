@@ -9,7 +9,8 @@ class Selectors:
 
     # hCaptcha check
     LOGIN_BUTTON_HCAPTCHA = "#anchor"
-    HCAPTCHA_IFRAME = "#emailform > div.pass-Captcha.css-1lbfmuq.eu4oa1w0 > div > iframe"
+    LOGIN_HCAPTCHA_IFRAME = "#emailform > div.pass-Captcha.css-1lbfmuq.eu4oa1w0 > div > iframe"
+    PASSWORD_HCAPTCHA_IFRAME = "#loginform > div.pass-Captcha.css-1lbfmuq.eu4oa1w0 > div:nth-child(1) > iframe"
     HCAPTCHA_CHECKBOX = "#checkbox"
 
     # Job search
