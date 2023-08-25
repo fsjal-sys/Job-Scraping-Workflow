@@ -1,6 +1,7 @@
 from utils import *
 from time import sleep
 from CSS_selectors import Selectors
+from selenium.common.exceptions import ElementClickInterceptedException
 
 def hCaptcha_check(element_selector, driver):
     # Returns True if hCaptcha is present, false if not present
@@ -30,6 +31,23 @@ def is_logged_in(driver):
 
     if (driver.current_url == current_URL): return True
     else: return False
+
+def set_dropdown_option(driver, options, menu, dropdown_option):
+    print(f"Setting dropdown option: {dropdown_option}")
+    sleep(1)
+    try:
+        try_getting(menu, driver).click()
+        for option in options:
+            text = try_getting(option, driver).text
+            text = format_dropdown_text(text)
+            print(text)
+            if text == dropdown_option:
+                try_getting(option, driver).click()
+                print(f"Set option: {text}")
+                return
+    except ElementClickInterceptedException:
+        print("ERROR: Element click intercepted.")
+        rest()
 
 def login(driver):
     print("######## Beginning LOGIN PROCESS ########")
@@ -81,11 +99,17 @@ def job_search(driver):
     sleep(3)
     print("######## Beginning JOB SEARCH PROCESS ########")
 
-    search_term, location = get_search_terms()
+    search_term, location, date_posted, distance, job_type = get_job_search_variables()
 
     try_getting(Selectors.KEYWORDS_SEARCH_INPUT, driver).send_keys(search_term)
     clear_input_field(try_getting(Selectors.LOCATION_SEARCH_INPUT, driver))
     try_getting(Selectors.LOCATION_SEARCH_INPUT, driver).send_keys(location)
+    try_getting(Selectors.JOB_SEARCH_BUTTON, driver).click()
+
+    set_dropdown_option(driver, Selectors.DATE_POSTED_DROPDOWN_OPTIONS, Selectors.DATE_POSTED_DROPDOWN_MENU, date_posted)
+    set_dropdown_option(driver, Selectors.DISTANCE_DROPDOWN_OPTIONS, Selectors.DISTANCE_DROPDOWN_MENU, distance)
+    set_dropdown_option(driver, Selectors.JOB_TYPE_DROPDOWN_OPTIONS, Selectors.JOB_TYPE_DROPDOWN_MENU, job_type)
+
     rest()
 
 def main():

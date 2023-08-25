@@ -1,7 +1,8 @@
-import undetected_chromedriver, time, pickle, os
+import undetected_chromedriver, time, pickle, os, re
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import Select
 from time import sleep
 from dotenv import load_dotenv
 from os import getenv
@@ -41,9 +42,9 @@ def get_credentials():
     load_dotenv()
     return getenv("EMAIL"), getenv("PASSWORD")
 
-def get_search_terms():
+def get_job_search_variables():
     load_dotenv()
-    return getenv("SEARCH_TERM"), getenv("LOCATION")
+    return getenv("SEARCH_TERM"), getenv("LOCATION"), getenv("DATE_POSTED"), getenv("DISTANCE"), getenv("JOB_TYPE")
 
 def save_cookies(driver):
     pickle.dump(driver.get_cookies(), open("cookies.pkl", "wb"))
@@ -61,3 +62,5 @@ def load_cookies(driver):
 def clear_input_field(element):
     while (element.get_attribute("value") != ""):
         element.send_keys(Keys.BACK_SPACE)
+
+def format_dropdown_text(option): return re.sub(r'\(\d+\)', "", option)
