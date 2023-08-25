@@ -1,67 +1,6 @@
 from utils import *
 from time import sleep
 from CSS_selectors import Selectors
-from selenium.common.exceptions import ElementClickInterceptedException
-
-def hCaptcha_check(element_selector, driver):
-    # Returns True if hCaptcha is present, false if not present
-
-    print("Doing a timed hCaptcha check...")
-    hCaptcha_iFrame_element = try_getting_timed(element_selector, driver, 10)
-    return hCaptcha_iFrame_element is not None
-
-def job_alert_popup_present(driver):
-    popup_element = try_getting_timed(Selectors.JOB_ALERT_POPUP, driver, 10)
-    if popup_element == None: 
-        print(f"Job Alert Popup Present: {False}")
-        return False
-    else:
-        print(f"Job Alert Popup Present: {True}")
-        return True
-
-def job_alert_popup_close(driver): 
-    print("Attempting to close popup...")
-    try_getting(Selectors.JOB_ALERT_POPUP_CLOSE, driver).click()
-    print("Popup closed.")
-
-def hCaptcha_actions(element_selector, driver):
-    hCaptcha_iFrame_element = try_getting(element_selector, driver)
-    print("Switching to iFrame...")
-    driver.switch_to.frame(hCaptcha_iFrame_element)
-    print("Switched to hCaptcha iFrame")
-
-    try_getting(Selectors.HCAPTCHA_CHECKBOX, driver).click()
-    print("Waiting for hCaptcha checkbox feedback...")
-    sleep(5)
-    driver.switch_to.default_content()
-    print("Back to default content.")
-
-def is_logged_in(driver):
-    print("Checking for autologin... ")
-
-    current_URL = driver.current_url
-
-    try_getting_timed(Selectors.LOGIN_CHECK_ELEMENT, driver, 5).click()
-
-    if (driver.current_url == current_URL): return True
-    else: return False
-
-def set_dropdown_option(driver, options, menu, dropdown_option):
-    print(f"Setting dropdown option: {dropdown_option}")
-    sleep(1)
-    try:
-        try_getting(menu, driver).click()
-        for option in options:
-            text = try_getting(option, driver).text
-            text = format_dropdown_text(text).rstrip()
-            print(f"{dropdown_option} matches {text}: {text == dropdown_option}")
-            if text == dropdown_option:
-                try_getting(option, driver).click()
-                print(f"Successfully set option: {text}")
-                return
-    except ElementClickInterceptedException:
-        print("ERROR: Element click intercepted.")
-        rest()
 
 def login(driver):
     print("######## Beginning LOGIN PROCESS ########")
