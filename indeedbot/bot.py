@@ -11,7 +11,7 @@ def login(driver):
     load_cookies(driver)
 
     logged_in = is_logged_in(driver)
-    print(f"Autlogin: {logged_in}")
+    print(f"Autologin: {logged_in}")
 
     if logged_in: return
 
@@ -68,11 +68,13 @@ def job_search(driver):
     set_dropdown_option(driver, Selectors.JOB_TYPE_DROPDOWN_OPTIONS, Selectors.JOB_TYPE_DROPDOWN_MENU, job_type)
     if job_alert_popup_present(driver): job_alert_popup_close(driver)
 
+def job_applications(driver):
     rest()
 
 def main():
     driver = driver_setup()
     login(driver)
     job_search(driver)
+    job_applications(driver)
     
 main()
