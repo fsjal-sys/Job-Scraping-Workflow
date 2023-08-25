@@ -10,6 +10,20 @@ def hCaptcha_check(element_selector, driver):
     hCaptcha_iFrame_element = try_getting_timed(element_selector, driver, 10)
     return hCaptcha_iFrame_element is not None
 
+def job_alert_popup_present(driver):
+    popup_element = try_getting_timed(Selectors.JOB_ALERT_POPUP, driver, 10)
+    if popup_element == None: 
+        print(f"Job Alert Popup Present: {False}")
+        return False
+    else:
+        print(f"Job Alert Popup Present: {True}")
+        return True
+
+def job_alert_popup_close(driver): 
+    print("Attempting to close popup...")
+    try_getting(Selectors.JOB_ALERT_POPUP_CLOSE, driver).click()
+    print("Popup closed.")
+
 def hCaptcha_actions(element_selector, driver):
     hCaptcha_iFrame_element = try_getting(element_selector, driver)
     print("Switching to iFrame...")
@@ -39,11 +53,11 @@ def set_dropdown_option(driver, options, menu, dropdown_option):
         try_getting(menu, driver).click()
         for option in options:
             text = try_getting(option, driver).text
-            text = format_dropdown_text(text)
-            print(text)
+            text = format_dropdown_text(text).rstrip()
+            print(f"{dropdown_option} matches {text}: {text == dropdown_option}")
             if text == dropdown_option:
                 try_getting(option, driver).click()
-                print(f"Set option: {text}")
+                print(f"Successfully set option: {text}")
                 return
     except ElementClickInterceptedException:
         print("ERROR: Element click intercepted.")
@@ -107,8 +121,13 @@ def job_search(driver):
     try_getting(Selectors.JOB_SEARCH_BUTTON, driver).click()
 
     set_dropdown_option(driver, Selectors.DATE_POSTED_DROPDOWN_OPTIONS, Selectors.DATE_POSTED_DROPDOWN_MENU, date_posted)
+    if job_alert_popup_present(driver): job_alert_popup_close(driver)
+
     set_dropdown_option(driver, Selectors.DISTANCE_DROPDOWN_OPTIONS, Selectors.DISTANCE_DROPDOWN_MENU, distance)
+    if job_alert_popup_present(driver): job_alert_popup_close(driver)
+
     set_dropdown_option(driver, Selectors.JOB_TYPE_DROPDOWN_OPTIONS, Selectors.JOB_TYPE_DROPDOWN_MENU, job_type)
+    if job_alert_popup_present(driver): job_alert_popup_close(driver)
 
     rest()
 
