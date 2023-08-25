@@ -1,4 +1,7 @@
 class Selectors:
+    # Login check element
+    LOGIN_CHECK_ELEMENT = "#gnav-main-container > div > div > div.css-9qge8r.e37uo190 > div.css-chsy6r.e37uo190 > div.css-1ble2gn.eu4oa1w0 > a"
+
     # Logging in
     LOGIN_BUTTON = "#gnav-main-container > div > div > div.css-9qge8r.e37uo190 > div.css-chsy6r.e37uo190 > div.css-1ble2gn.eu4oa1w0 > a"
     EMAIL_INPUT = "#ifl-InputFormField-3"
@@ -21,3 +24,5 @@ class Selectors:
     # Job alert popup
     JOB_ALERT_POPUP = "#mosaic-desktopserpjapopup"
     JOB_ALERT_POPUP_CLOSE = "#mosaic-desktopserpjapopup > div.css-otmc9o.eu4oa1w0 > button > svg"
+
+    # #gnav-main-container > div > div > div.css-9qge8r.e37uo190 > div.css-chsy6r.e37uo190 > div.css-1ble2gn.eu4oa1w0 > a

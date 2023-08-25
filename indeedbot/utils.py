@@ -1,4 +1,4 @@
-import undetected_chromedriver, time
+import undetected_chromedriver, time, pickle, os
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
 from time import sleep
@@ -43,3 +43,17 @@ def get_credentials():
 def get_search_terms():
     load_dotenv()
     return getenv("SEARCH_TERM"), getenv("LOCATION")
+
+def save_cookies(driver):
+    pickle.dump(driver.get_cookies(), open("cookies.pkl", "wb"))
+
+def load_cookies(driver):
+    if os.path.exists("cookies.pkl"):
+        cookies = pickle.load(open("cookies.pkl", "rb"))
+        print("Loading cookies...")
+        for cookie in cookies:
+            driver.add_cookie(cookie)
+        print("Cookies loaded.")
+    else:
+        print("No cookies file found.")
+        

@@ -21,12 +21,28 @@ def hCaptcha_actions(element_selector, driver):
     driver.switch_to.default_content()
     print("Back to default content.")
 
+def is_logged_in(driver):
+    print("Checking for autologin... ")
+
+    current_URL = driver.current_url
+
+    try_getting_timed(Selectors.LOGIN_CHECK_ELEMENT, driver, 5).click()
+
+    if (driver.current_url == current_URL): return True
+    else: return False
+
 def login(driver):
     print("######## Beginning LOGIN PROCESS ########")
 
     email, password = get_credentials()
 
     driver.get("https://ca.indeed.com")
+    load_cookies(driver)
+
+    logged_in = is_logged_in(driver)
+    print(f"Autlogin: {logged_in}")
+
+    if logged_in: return
 
     try_getting(Selectors.LOGIN_BUTTON, driver).click() # Click on login button
     sleep(1)
@@ -56,6 +72,8 @@ def login(driver):
         try_getting_timed(Selectors.PASSWORD_INPUT, driver, 10).send_keys(password)
         sleep(1)
         try_getting(Selectors.SIGN_IN_BUTTON, driver).click()
+    
+    save_cookies(driver)
 
     print("######## LOGIN PROCESS COMPLETE ########\n")
 
