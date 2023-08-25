@@ -30,10 +30,15 @@ def try_getting_timed(element_selector, driver, timer):
     while (time.time() - start_time) < timer:
         try:
             element = driver.find_element(By.CSS_SELECTOR, element_selector)
-            getting = False
         except NoSuchElementException:
             pass
+    if element is not None: print(f"{element_selector} was found.")
+    else: print(f"{element_selector} was not found.")
     return element
+
+def try_getting_child_elements(parent_element, child_element_selector):
+    child_elements = parent_element.find_elements(By.CSS_SELECTOR, child_element_selector)
+    return child_elements
 
 def rest(): 
     print("Resting...")
@@ -74,7 +79,7 @@ def hCaptcha_check(element_selector, driver):
     return hCaptcha_iFrame_element is not None
 
 def job_alert_popup_present(driver):
-    popup_element = try_getting_timed(Selectors.JOB_ALERT_POPUP, driver, 10)
+    popup_element = try_getting_timed(Selectors.JOB_ALERT_POPUP, driver, 5)
     if popup_element == None: 
         print(f"Job Alert Popup Present: {False}")
         return False
@@ -104,7 +109,7 @@ def is_logged_in(driver):
 
     current_URL = driver.current_url
 
-    try_getting_timed(Selectors.LOGIN_CHECK_ELEMENT, driver, 5).click()
+    try_getting_timed(Selectors.LOGIN_CHECK_ELEMENT, driver, 1).click()
 
     if (driver.current_url == current_URL): return True
     else: return False

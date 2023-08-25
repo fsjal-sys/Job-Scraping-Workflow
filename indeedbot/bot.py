@@ -3,7 +3,7 @@ from time import sleep
 from CSS_selectors import Selectors
 
 def login(driver):
-    print("######## Beginning LOGIN PROCESS ########")
+    print("######## BEGINNING LOGIN PROCESS ########")
 
     email, password = get_credentials()
 
@@ -50,7 +50,7 @@ def login(driver):
 
 def job_search(driver):
     sleep(3)
-    print("######## Beginning JOB SEARCH PROCESS ########")
+    print("######## BEGINNING JOB SEARCH PROCESS ########")
 
     search_term, location, date_posted, distance, job_type = get_job_search_variables()
 
@@ -68,7 +68,50 @@ def job_search(driver):
     set_dropdown_option(driver, Selectors.JOB_TYPE_DROPDOWN_OPTIONS, Selectors.JOB_TYPE_DROPDOWN_MENU, job_type)
     if job_alert_popup_present(driver): job_alert_popup_close(driver)
 
+    print("######## JOB SEARCH PROCESS COMPLETE ########\n")
+
+def send_application(driver):
+    if (is_indeed_application(driver)):
+        print("This job has an Indeed application.")
+        try_getting(Selectors.INDEED_APPLY_BUTTON, driver).click()
+        driver.switch_to.window(driver.window_handles[1])
+        rest()
+    else:
+        print("This job has an external application.")
+
+def is_indeed_application(driver):
+    indeed_apply_button = try_getting_timed(Selectors.INDEED_APPLY_BUTTON, driver, 3)
+    if indeed_apply_button == None:
+        apply_button_link = try_getting_timed(Selectors.APPLY_BUTTON_LINK, driver, 3)
+        if apply_button_link == None: print("Error finding apply button.")
+        else: return False
+    else: return True
+
 def job_applications(driver):
+    print("######## BEGINNING JOB APPLICATION PROCESS ########")
+
+    """
+    applied_jobs = []
+    open_jobs = []
+
+    job_list = try_getting_child_elements(try_getting(Selectors.JOB_SEARCH_LEFT_PANE, driver), "#mosaic-provider-jobcards > ul > li")
+    for job in job_list:
+        job_details = try_getting_child_elements(job, Selectors.CHILD_JOB_VISIT_STATUS)
+        for detail in job_details: 
+            if (detail.text.split(" ")[0] == "Visited"): 
+                applied_jobs.append(job)
+            else: 
+                open_jobs.append(job)
+
+    for job in open_jobs:
+        send_application()
+    """
+
+    job_list = try_getting_child_elements(try_getting(Selectors.JOB_SEARCH_LEFT_PANE, driver), "#mosaic-provider-jobcards > ul > li")
+    for job in job_list:
+        job.click()
+        send_application(driver)
+
     rest()
 
 def main():

@@ -61,4 +61,18 @@ class Selectors:
     JOB_ALERT_POPUP_CLOSE = "#mosaic-desktopserpjapopup > div.css-otmc9o.eu4oa1w0 > button > svg"
 
     # Job list navigation
-    JOB_SEARCH_LEFT_PANE = "#jobsearch-JapanPage > div > div > div.css-hyhnne.e37uo190 > div.jobsearch-LeftPane"
+    JOB_SEARCH_LEFT_PANE = "#mosaic-provider-jobcards > ul"
+    
+    CHILD_JOB_VISIT_STATUS = "div > div.slider_container.css-8xisqv.eu4oa1w0 > div > div > div > table.jobCardShelfContainer.big6_visualChanges > tbody > tr.underShelfFooter > td > div > span"
+
+    # Job application buttons
+    INDEED_APPLY_BUTTON = "#indeedApplyButton > div > span"
+    APPLY_BUTTON_LINK = "#applyButtonLinkContainer > div > div > button"
+
+    # Indeed application
+    INDEED_APPLICATION_PAGE_TITLE = "#ia-container > div > div.css-15aza98.eu4oa1w0 > div > main > div.css-15adxh0.e37uo190 > div.css-t4lkhd.eu4oa1w0 > div > div > h1"
+    FIRST_NAME_INPUT_FIELD = "#input-firstName"
+    LAST_NAME_INPUT_FIELD = "#input-lastName"
+    CITY_INPUT_FIELD = "#input-location\.city"
+    PHONE_NUMBER_INPUT_FIELD = "#input-phoneNumber"
+    INDEED_APPLICATION_CONTINUE_BUTTON = "#ia-container > div > div.css-15aza98.eu4oa1w0 > div > main > div.css-15adxh0.e37uo190 > div.css-t4lkhd.eu4oa1w0 > div > div > div.ia-BasePage-footer.dd-privacy-allow > div > button"
