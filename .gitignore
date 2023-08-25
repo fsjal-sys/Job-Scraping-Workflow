@@ -1,2 +1,4 @@
 .env
+cookies.pkl
+indeedbot/cookies.pkl
 __pycache__/

@@ -20,10 +20,10 @@ def hCaptcha_actions(element_selector, driver):
     sleep(5)
     driver.switch_to.default_content()
     print("Back to default content.")
-    try_getting(Selectors.EMAIL_CONTINUE_BUTTON, driver).click()
-    sleep(1)
 
 def login(driver):
+    print("######## Beginning LOGIN PROCESS ########")
+
     email, password = get_credentials()
 
     driver.get("https://ca.indeed.com")
@@ -37,30 +37,41 @@ def login(driver):
 
     hCaptcha_present = hCaptcha_check(Selectors.LOGIN_HCAPTCHA_IFRAME, driver) # First potential hCaptcha check
     print(f"hCaptcha present: {hCaptcha_present}")
-    if hCaptcha_present: hCaptcha_actions(Selectors.LOGIN_HCAPTCHA_IFRAME, driver)
+    if hCaptcha_present: 
+        hCaptcha_actions(Selectors.LOGIN_HCAPTCHA_IFRAME, driver)
+        try_getting(Selectors.EMAIL_CONTINUE_BUTTON, driver).click()
+        sleep(1)
 
     try_getting(Selectors.LOGIN_WITH_PASSWORD_LINK, driver).click() # Click on link to login with password
     sleep(5)
-    try_getting(Selectors.PASSWORD_INPUT, driver).send_keys(password)
+    try_getting_timed(Selectors.PASSWORD_INPUT, driver, 5).send_keys(password)
+
     sleep(1)
     try_getting(Selectors.SIGN_IN_BUTTON, driver).click()
 
-    hCaptcha_present = hCaptcha_check(Selectors.PASSWORD_HCAPTCHA_IFRAME, driver)
+    hCaptcha_present = hCaptcha_check(Selectors.PASSWORD_HCAPTCHA_IFRAME, driver) # Second potential hCaptcha check
     print(f"hCaptcha present: {hCaptcha_present}")
-    if hCaptcha_present: hCaptcha_actions(Selectors.PASSWORD_HCAPTCHA_IFRAME, driver)
+    if hCaptcha_present: 
+        hCaptcha_actions(Selectors.PASSWORD_HCAPTCHA_IFRAME, driver)
+        try_getting_timed(Selectors.PASSWORD_INPUT, driver, 10).send_keys(password)
+        sleep(1)
+        try_getting(Selectors.SIGN_IN_BUTTON, driver).click()
+
+    print("######## LOGIN PROCESS COMPLETE ########\n")
 
 def job_search(driver):
+    print("######## Beginning JOB SEARCH PROCESS ########")
+
     search_term, location = get_search_terms()
 
     try_getting(Selectors.KEYWORDS_SEARCH_INPUT, driver).send_keys(search_term)
+    try_getting(Selectors.LOCATION_SEARCH_INPUT, driver).clear()
     try_getting(Selectors.LOCATION_SEARCH_INPUT, driver).send_keys(location)
     rest()
 
-"""
 def main():
     driver = driver_setup()
     login(driver)
     job_search(driver)
-"""
     
 main()
