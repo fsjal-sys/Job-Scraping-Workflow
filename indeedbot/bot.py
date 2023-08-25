@@ -78,12 +78,13 @@ def login(driver):
     print("######## LOGIN PROCESS COMPLETE ########\n")
 
 def job_search(driver):
+    sleep(3)
     print("######## Beginning JOB SEARCH PROCESS ########")
 
     search_term, location = get_search_terms()
 
     try_getting(Selectors.KEYWORDS_SEARCH_INPUT, driver).send_keys(search_term)
-    try_getting(Selectors.LOCATION_SEARCH_INPUT, driver).clear()
+    clear_input_field(try_getting(Selectors.LOCATION_SEARCH_INPUT, driver))
     try_getting(Selectors.LOCATION_SEARCH_INPUT, driver).send_keys(location)
     rest()
 

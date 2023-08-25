@@ -1,6 +1,7 @@
 import undetected_chromedriver, time, pickle, os
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 from time import sleep
 from dotenv import load_dotenv
 from os import getenv
@@ -56,4 +57,7 @@ def load_cookies(driver):
         print("Cookies loaded.")
     else:
         print("No cookies file found.")
-        
+
+def clear_input_field(element):
+    while (element.get_attribute("value") != ""):
+        element.send_keys(Keys.BACK_SPACE)
