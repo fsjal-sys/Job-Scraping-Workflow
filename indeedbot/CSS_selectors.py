@@ -7,7 +7,9 @@ class Selectors:
     EMAIL_INPUT = "#ifl-InputFormField-3"
     EMAIL_CONTINUE_BUTTON = "#emailform > button"
     LOGIN_WITH_PASSWORD_LINK = "#auth-page-google-password-fallback"
-    PASSWORD_INPUT = "#ifl-InputFormField-156"
+    PASSWORD_INPUT_1 = "#ifl-InputFormField-141"
+    PASSWORD_INPUT_2 = "#ifl-InputFormField-156"
+    PASSWORD_INPUT_3 = "#ifl-InputFormField-16"
     SIGN_IN_BUTTON = "#loginform > button"
 
     # hCaptcha check

@@ -2,6 +2,7 @@ from utils import *
 from time import sleep
 from CSS_selectors import Selectors
 
+# Will refactor all code in a later date, after application functionality is put in
 def login(driver):
     print("######## BEGINNING LOGIN PROCESS ########")
 
@@ -15,7 +16,6 @@ def login(driver):
 
     if logged_in: return
 
-    try_getting(Selectors.LOGIN_BUTTON, driver).click() # Click on login button
     sleep(1)
     try_getting(Selectors.EMAIL_INPUT, driver).send_keys(email) # Enter login details
     sleep(1)
@@ -31,8 +31,12 @@ def login(driver):
 
     try_getting(Selectors.LOGIN_WITH_PASSWORD_LINK, driver).click() # Click on link to login with password
     sleep(5)
-    try_getting_timed(Selectors.PASSWORD_INPUT, driver, 5).send_keys(password)
-
+    password_input_field_element = try_getting_timed(Selectors.PASSWORD_INPUT_1, driver, 5)
+    if password_input_field_element == None:
+        password_input_field_element = try_getting_timed(Selectors.PASSWORD_INPUT_1, driver, 5)
+        if password_input_field_element == None: try_getting_timed(Selectors.PASSWORD_INPUT_3, driver, 5).send_keys(password)
+        else: password_input_field_element.send_keys(password)
+    else: password_input_field_element.send_keys(password)
     sleep(1)
     try_getting(Selectors.SIGN_IN_BUTTON, driver).click()
 
@@ -71,10 +75,22 @@ def job_search(driver):
     print("######## JOB SEARCH PROCESS COMPLETE ########\n")
 
 def send_application(driver):
+    first_name, last_name, phone_number, city = get_job_application_variables()
+
     if (is_indeed_application(driver)):
         print("This job has an Indeed application.")
         try_getting(Selectors.INDEED_APPLY_BUTTON, driver).click()
         driver.switch_to.window(driver.window_handles[1])
+
+        clear_input_field(try_getting(Selectors.FIRST_NAME_INPUT_FIELD, driver))
+        try_getting(Selectors.FIRST_NAME_INPUT_FIELD, driver).send_keys(first_name)
+        clear_input_field(try_getting(Selectors.LAST_NAME_INPUT_FIELD, driver))
+        try_getting(Selectors.LAST_NAME_INPUT_FIELD, driver).send_keys(last_name)
+        clear_input_field(try_getting(Selectors.CITY_INPUT_FIELD, driver))
+        try_getting(Selectors.CITY_INPUT_FIELD, driver).send_keys(city)
+        clear_input_field(try_getting(Selectors.PHONE_NUMBER_INPUT_FIELD, driver))
+        try_getting(Selectors.PHONE_NUMBER_INPUT_FIELD, driver).send_keys(phone_number)
+
         rest()
     else:
         print("This job has an external application.")

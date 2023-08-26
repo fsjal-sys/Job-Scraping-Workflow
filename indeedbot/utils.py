@@ -52,6 +52,10 @@ def get_job_search_variables():
     load_dotenv()
     return getenv("SEARCH_TERM"), getenv("LOCATION"), getenv("DATE_POSTED"), getenv("DISTANCE"), getenv("JOB_TYPE")
 
+def get_job_application_variables():
+    load_dotenv
+    return getenv("FIRST_NAME"), getenv("LAST_NAME"), getenv("PHONE_NUMBER"), getenv("CITY")
+
 def save_cookies(driver):
     pickle.dump(driver.get_cookies(), open("cookies.pkl", "wb"))
 
