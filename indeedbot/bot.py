@@ -14,7 +14,9 @@ def login(driver):
     logged_in = is_logged_in(driver)
     print(f"Autologin: {logged_in}")
 
-    if logged_in: return
+    if logged_in: 
+        print("######## LOGIN PROCESS COMPLETE ########\n")
+        return
 
     sleep(1)
     try_getting(Selectors.EMAIL_INPUT, driver).send_keys(email) # Enter login details
@@ -31,12 +33,9 @@ def login(driver):
 
     try_getting(Selectors.LOGIN_WITH_PASSWORD_LINK, driver).click() # Click on link to login with password
     sleep(5)
-    password_input_field_element = try_getting_timed(Selectors.PASSWORD_INPUT_1, driver, 5)
-    if password_input_field_element == None:
-        password_input_field_element = try_getting_timed(Selectors.PASSWORD_INPUT_1, driver, 5)
-        if password_input_field_element == None: try_getting_timed(Selectors.PASSWORD_INPUT_3, driver, 5).send_keys(password)
-        else: password_input_field_element.send_keys(password)
-    else: password_input_field_element.send_keys(password)
+    password_input_selector = input("Enter the CSS Selector for the password input here: ")
+    password_input_field_element = try_getting_timed(password_input_selector, driver, 5)
+    password_input_field_element.send_keys(password)
     sleep(1)
     try_getting(Selectors.SIGN_IN_BUTTON, driver).click()
 
@@ -74,6 +73,10 @@ def job_search(driver):
 
     print("######## JOB SEARCH PROCESS COMPLETE ########\n")
 
+def check_for_employer_questions(driver):
+    questions_from_employer_header = Selectors.QUESTIONS_FROM_EMPLOYER_HEADER
+    rest()
+
 def send_application(driver):
     first_name, last_name, phone_number, city = get_job_application_variables()
 
@@ -90,8 +93,13 @@ def send_application(driver):
         try_getting(Selectors.CITY_INPUT_FIELD, driver).send_keys(city)
         clear_input_field(try_getting(Selectors.PHONE_NUMBER_INPUT_FIELD, driver))
         try_getting(Selectors.PHONE_NUMBER_INPUT_FIELD, driver).send_keys(phone_number)
+        try_getting(Selectors.INDEED_APPLICATION_CONTACT_CONTINUE_BUTTON, driver).click()
+        try_getting(Selectors.INDEED_SELECT_RESUME, driver).click()
 
-        rest()
+        indeed_applcation_resume_continue_button = try_getting(Selectors.INDEED_APPLICATION_RESUME_CONTINUE_BUTTON, driver)
+        indeed_applcation_resume_continue_button.click()
+
+        check_for_employer_questions(driver)
     else:
         print("This job has an external application.")
 
