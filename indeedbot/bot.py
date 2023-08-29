@@ -74,7 +74,8 @@ def job_search(driver):
     print("######## JOB SEARCH PROCESS COMPLETE ########\n")
 
 def check_for_employer_questions(driver):
-    questions_from_employer_header = Selectors.QUESTIONS_FROM_EMPLOYER_HEADER
+    
+    current_URL = driver.current_url
     rest()
 
 def send_application(driver):
