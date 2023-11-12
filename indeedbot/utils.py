@@ -1,4 +1,4 @@
-import undetected_chromedriver, time, pickle, os, re
+import undetected_chromedriver, time, pickle, os, re, traceback, inspect
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -8,7 +8,10 @@ from time import sleep
 from dotenv import load_dotenv
 from os import getenv
 
-def driver_setup(): return undetected_chromedriver.Chrome(driver_executable_path="./chromedriver-linux64/chromedriver")
+def driver_setup():
+    options = undetected_chromedriver.ChromeOptions()
+    options.binary_location = "./chromium/chrome"
+    return undetected_chromedriver.Chrome(driver_executable_path="./chromedriver-linux64/chromedriver", options=options)
 
 def try_getting(element_selector, driver):
     print(f"Trying to find element: {element_selector}")
@@ -33,7 +36,7 @@ def try_getting_timed(element_selector, driver, timer):
         except NoSuchElementException:
             pass
     if element is not None: print(f"{element_selector} was found.")
-    else: print(f"{element_selector} was not found.")
+    else: log_print(f"{element_selector} was not found.")
     return element
 
 def try_getting_child_elements(parent_element, child_element_selector):
@@ -42,7 +45,15 @@ def try_getting_child_elements(parent_element, child_element_selector):
 
 def rest(): 
     print("Resting...")
-    while (True): sleep(1)
+    while True: time.sleep(1)
+
+def log_print(*args, **kwargs):
+    frame_info = inspect.stack()[1]
+    file_name = frame_info.filename
+    line_no = frame_info.lineno
+    function_name = frame_info.function
+    print(f"{file_name}:{function_name}:{line_no} ---> ", *args, **kwargs)
+    print("\n")
 
 def get_credentials():
     load_dotenv()
@@ -107,6 +118,9 @@ def hCaptcha_actions(element_selector, driver):
     sleep(5)
     driver.switch_to.default_content()
     print("Back to default content.")
+
+def indeed_cloudfare_check():
+    pass
 
 def is_logged_in(driver):
     print("Checking for autologin... ")

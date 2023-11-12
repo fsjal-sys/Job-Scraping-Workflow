@@ -77,9 +77,10 @@ class Selectors:
     LAST_NAME_INPUT_FIELD = "#input-lastName"
     CITY_INPUT_FIELD = "#input-location\.city"
     PHONE_NUMBER_INPUT_FIELD = "#input-phoneNumber"
-    INDEED_APPLICATION_CONTACT_CONTINUE_BUTTON = "#ia-container > div > div.css-15aza98.eu4oa1w0 > div > main > div.css-15adxh0.e37uo190 > div.css-t4lkhd.eu4oa1w0 > div > div > div.ia-BasePage-footer.dd-privacy-allow > div > button"
-    INDEED_SELECT_RESUME = "#resume-display-buttonHeader > div.css-1m4hn7v.e37uo190"
-    INDEED_APPLICATION_RESUME_CONTINUE_BUTTON = "#ia-container > div > div.css-15aza98.eu4oa1w0 > div > main > div.css-15adxh0.e37uo190 > div.css-t4lkhd.eu4oa1w0 > div > div > div.ia-BasePage-footer.dd-privacy-allow > div > button"
+    #INDEED_APPLICATION_CONTACT_CONTINUE_BUTTON = "#ia-container > div > div.css-15aza98.eu4oa1w0 > div > main > div.css-15adxh0.e37uo190 > div.css-t4lkhd.eu4oa1w0 > div > div > div.ia-BasePage-footer.dd-privacy-allow > div > button"
+    INDEED_APPLICATION_CONTACT_CONTINUE_BUTTON = "#ia-container > div > div.css-12qwcfa.eu4oa1w0 > div > div > div.css-w93e9b.e37uo190 > div.css-6e23tm.eu4oa1w0 > div > div > main > div.ia-BasePage-footer.dd-privacy-allow > div > button"
+    INDEED_SELECT_RESUME = "#resume-display-buttonHeader > div.css-jjnffm.e37uo190"
+    INDEED_APPLICATION_RESUME_CONTINUE_BUTTON = "#ia-container > div > div.css-12qwcfa.eu4oa1w0 > div > div > div.css-w93e9b.e37uo190 > div.css-6e23tm.eu4oa1w0 > div > div > main > div.ia-BasePage-footer.dd-privacy-allow > div > button"
 
     #Employer questions
     QUESTIONS_FROM_EMPLOYER_HEADER = "#ia-container > div > div.css-15aza98.eu4oa1w0 > div > main > div.css-15adxh0.e37uo190 > div.css-t4lkhd.eu4oa1w0 > div > div > h1"

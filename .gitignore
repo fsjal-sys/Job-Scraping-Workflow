@@ -1,4 +1,6 @@
 .env
 cookies.pkl
 indeedbot/cookies.pkl
+indeedbot/chromium/
+indeedbot/chromium/chrome
 __pycache__/
