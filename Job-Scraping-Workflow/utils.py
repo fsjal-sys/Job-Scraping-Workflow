@@ -10,7 +10,8 @@ from os import getenv
 
 def driver_setup():
     options = undetected_chromedriver.ChromeOptions()
-    options.binary_location = "./chromium/chrome"
+    binary_location = "/usr/bin/chromium/chrome"
+    options.binary_location = binary_location
     return undetected_chromedriver.Chrome(driver_executable_path="./chromedriver-linux64/chromedriver", options=options)
 
 def try_getting(element_selector, driver):
